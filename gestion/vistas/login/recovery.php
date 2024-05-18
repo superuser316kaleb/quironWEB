@@ -20,15 +20,22 @@
           <a href="/../quiron/inicio.php"> 
               <img class="login-logo" src="/../quiron/images/lowgo.png">
           </a>
-          <h1 class="title">Recupera tu Contraseña</h1>
+          <h1 class="title">Nueva Contraseña</h1>
           </div>
-          <form action="login.php?action=reset" method="post">  
+          <form action="login.php?action=recovery&token=<?php echo $token ?>" method="post">  
           <div class="field">
-            <label class="label">Correo</label>
+            <label class="label">Contraseña</label>
             <div class="control has-icons-right">
-              <input name="correo" class="input" type="text">
+              <input name="nueva" class="input" type="password" required="requiered">
               <span class="icon is-small is-right">
-                <i class="fa fa-envelope"></i>
+                <i class="fa fa-key"></i>
+              </span>
+            </div>
+            <label class="label">Confirma contraseña</label>
+            <div class="control has-icons-right">
+              <input name="confirmacion" class="input" type="password" required="requiered">
+              <span class="icon is-small is-right">
+                <i class="fa fa-key"></i>
               </span>
             </div>
           </div>

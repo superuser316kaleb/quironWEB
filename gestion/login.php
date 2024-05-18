@@ -1,5 +1,6 @@
 <?php
 include(__DIR__.'/sistema.clase.php');
+include(__DIR__.'/vistas/header.sencillo.php');
 $app = new Sistema();
 $action=(isset($_GET['action']))?$_GET['action']:null;
 switch ($action){

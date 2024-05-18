@@ -166,7 +166,7 @@ var $count=0;
                     $mensaje='Hola '.$nombre_persona.'<br>
                     Se te ha enviado un correo para recuperar tu contraseña. <br>
                     Si no ha recibido este correo por favor ignora este mensaje.<br>
-                    <a href="http://localhost/ferreteria/admin/login.php?action=recovery&token='.$token.'">Recuperar contraseña</a><br>
+                    <a href="http://localhost/quiron/gestion/login.php?action=recovery&token='.$token.'">Recuperar contraseña</a><br>
                     Muchas gracias <br>
                     Atentamente: La Ferreteria';
                     if($this->sendMail($destinatario,$nombre_persona,$asunto,$mensaje)){
@@ -223,7 +223,7 @@ var $count=0;
                     if(!is_null($contrasena)){
                         $contrasena=md5($contrasena);
                         $correo=$datos[0]['correo'];
-                        $sql='UPDATE usuario set contrasena = :contrasena, token=null where correo = :correo';
+                        $sql='UPDATE usuarios set contrasena = :contrasena, token=null where correo = :correo';
                         $stmt=$this->conn->prepare($sql);
                         $stmt->bindParam(':contrasena',$contrasena,PDO::PARAM_STR);
                         $stmt->bindParam(':correo',$correo,PDO::PARAM_STR);
