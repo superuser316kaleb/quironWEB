@@ -87,18 +87,17 @@ var $count=0;
         }
     }
     function login($correo,$contrasena){
-        //$contrasena=md5($contrasena);
         $this->connect();
         $sql="select * from usuarios
-        where correo=:correo and contrasena=:contrasena;";
+        where correo=:correo;";
         $stmt=$this->conn->prepare($sql);
         $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
-        $stmt->bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
         $stmt->execute();
         $datos=array();
-        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $datos = $stmt->fetchAll();
-        if(isset($datos[0])){//si existe el dato
+        $hash=$datos[0]['contrasena'];
+        if(password_verify($contrasena,$hash)){//si existe el dato
             $roles=array();
             $roles=$this->getRol($correo);
             $privilegios=array();
@@ -114,6 +113,7 @@ var $count=0;
         }
         return false;    
     }
+
     function getRol($correo){
         $this->connect();
         $sql="SELECT  r.rol
@@ -221,7 +221,7 @@ var $count=0;
                 $datos = $stmt->fetchAll();
                 if(isset($datos[0])){
                     if(!is_null($contrasena)){
-                        $contrasena=md5($contrasena);
+                        $contrasena=password_hash($contrasena,PASSWORD_DEFAULT);
                         $correo=$datos[0]['correo'];
                         $sql='UPDATE usuarios set contrasena = :contrasena, token=null where correo = :correo';
                         $stmt=$this->conn->prepare($sql);
@@ -233,61 +233,81 @@ var $count=0;
                 }
             }
         }
-    function register($datos){
-        if(!filter_var($datos['correo'],FILTER_VALIDATE_EMAIL)){
-            return false;
-        }
-        $this->connect();
+   function register($datos){
+    if (!filter_var($datos['correo'], FILTER_VALIDATE_EMAIL)) {
+        return false;
+    }
+    $this->connect();
 
-        try{
-            $this->conn->beginTransaction();
-            $sql = 'SELECT * FROM usuarios WHERE correo=:correo';
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':correo', $datos['correo'], PDO::PARAM_STR);
-            $stmt->execute();
-            $usuario = $stmt->fetchAll();
-            if(isset($usuario[0])){
-                $this->conn->rollBack();
-                return false;
-            }
-            $sql = 'INSERT INTO usuarios (correo,contrasena) VALUES (:correo,:contrasena)';
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':correo', $datos['correo'], PDO::PARAM_STR);
-            $contrasena = $datos['contrasena'];
-            $contrasena = md5($contrasena);
-            $stmt->bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
-            $stmt->execute();
-            $sql = 'select * from usuarios where correo = :correo';
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':correo', $datos['correo'], PDO::PARAM_STR);
-            $stmt->execute();
-            $usuario = $stmt->fetchAll();
-            if($usuario[0]){
-                $id_usuario = $usuario[0]['id_usuario'];
-                $sql = 'INSERT INTO usuario_rol (id_usuario,id_rol) VALUES (:id_usuario,1)';
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-                $stmt->execute();
-                $sql = 'SELECT * FROM usuarios WHERE c.id_usuario = :id_usuario;';
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
-                $stmt->execute();
-                $info = $stmt->fetchAll();
-                if(isset($info[0])){
-                    $this->conn->commit();
-                    return true;
-                }
-                $this->conn->rollBack();
-                return false;
-            }else{
-                $this->conn->rollBack();
-                return false;        
-            }
-        }catch(PDOException $e){
+    try {
+        $this->conn->beginTransaction();
+        
+        // Check if the email already exists
+        $sql = 'SELECT * FROM usuarios WHERE correo = :correo';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':correo', $datos['correo'], PDO::PARAM_STR);
+        $stmt->execute();
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($usuario) {
             $this->conn->rollBack();
             return false;
         }
+
+        // Insert new user
+        $sql = 'INSERT INTO usuarios (correo, contrasena, nombre, primer_apellido, segundo_apellido, numero_telefonico, direccion) 
+                VALUES (:correo, :contrasena, :nombre, :primer_apellido, :segundo_apellido, :numero_telefonico, :direccion)';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':correo', $datos['correo'], PDO::PARAM_STR);
+        $stmt->bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
+        $stmt->bindParam(':primer_apellido', $datos['primer_apellido'], PDO::PARAM_STR);
+        $stmt->bindParam(':segundo_apellido', $datos['segundo_apellido'], PDO::PARAM_STR);
+        $stmt->bindParam(':numero_telefonico', $datos['numero_telefonico'], PDO::PARAM_STR);
+        $stmt->bindParam(':direccion', $datos['direccion'], PDO::PARAM_STR);
+        
+        // Encrypt password
+        $contrasena = password_hash($datos['contrasena'], PASSWORD_DEFAULT);
+        $stmt->bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
+        $stmt->execute();
+
+        // Get the new user ID
+        $sql = 'SELECT * FROM usuarios WHERE correo = :correo';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':correo', $datos['correo'], PDO::PARAM_STR);
+        $stmt->execute();
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($usuario) {
+            $id_usuario = $usuario['id_usuario'];
+
+            // Assign role to the new user
+            $sql = 'INSERT INTO usuario_rol (id_usuario, id_rol) VALUES (:id_usuario, 1)';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+            $stmt->execute();
+
+            // Verify the user-role insertion
+            $sql = 'SELECT * FROM usuarios WHERE id_usuario = :id_usuario';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+            $stmt->execute();
+            $info = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($info) {
+                $this->conn->commit();
+                return true;
+            }
+        }
+
+        // Rollback if any step fails
+        $this->conn->rollBack();
+        return false;
+    } catch (PDOException $e) {
+        $this->conn->rollBack();
+        return false;
     }
+}
+
 
     public function validateEmail($email){
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){

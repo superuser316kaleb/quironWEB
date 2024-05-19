@@ -32,7 +32,7 @@ class Usuario extends Sistema
          VALUES (:nombre,:correo,:contrasena, :primer_apellido, :segundo_apellido, :numero_telefonico,:direccion);");
         $stmt->bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
         $stmt->bindParam(':correo', $datos['correo'], PDO::PARAM_STR);
-        $stmt->bindParam(':contrasena', $datos['contrasena'], PDO::PARAM_STR);
+        $stmt->bindParam(':contrasena', md5($datos['contrasena']), PDO::PARAM_STR);
         $stmt->bindParam(':primer_apellido', $datos['primer_apellido'], PDO::PARAM_STR);
         $stmt->bindParam(':segundo_apellido', $datos['segundo_apellido'], PDO::PARAM_STR);
         $stmt->bindParam(':numero_telefonico', $datos['numero_telefonico'], PDO::PARAM_INT);

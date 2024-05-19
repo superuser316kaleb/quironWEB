@@ -49,6 +49,9 @@
           <div class="has-text-centered ">
             <a class="has-text-info" href="login.php?action=forgot" >Olvidaste tu contraseña?!</a>
           </div>
+          <div class="has-text-centered ">
+            <a class="has-text-info" href="login.php?action=register" >Registrar nuevo usuario!</a>
+          </div>
           </div>
           </form>  
           
