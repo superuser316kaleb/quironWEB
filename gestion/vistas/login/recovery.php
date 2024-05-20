@@ -42,7 +42,7 @@
           <div class="control">
           <div class="has-text-centered">
           <p>Proporciona el correo de tu cuenta y enviaremos un correo para que puedas recuperar tu contraseña</p>
-            <button type="submit" class="button is-vcentered is-info is-outlined">Enviar correo</butt>
+            <button type="submit" class="button is-vcentered is-info is-outlined">Enviar correo</button>
           </div>
           </div>
           </form>  

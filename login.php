@@ -10,7 +10,7 @@ switch ($action){
     $tipo = 'success';
     $mensaje='Ha salido del sistema correctamente';
     $app->alert($tipo,$mensaje);
-    include __DIR__.'/vistas/main.php';
+    include __DIR__.'/vistas/login.php';
     break;
     case 'login':
     $correo=$_POST['correo'];
@@ -33,8 +33,10 @@ switch ($action){
     $reset=$app->reset($correo);
     if($reset){
         $tipo='success';
+        include_once(__DIR__.'/vistas/header.sencillo.php');
         $mensaje='Se ha enviado un correo para recuperacion';
         $app->alert($tipo,$mensaje);
+        include_once __DIR__.'/vistas/return.php';
     }else{
         include_once(__DIR__.'/vistas/header.sencillo.php');
         $tipo='danger';
@@ -52,7 +54,7 @@ switch ($action){
                     $tipo='success';
                     $mensaje='Se ha cambiado la contraseña correctamente';
                     $app->alert($tipo,$mensaje);
-                    include __DIR__.'/vistas/main.php';
+                    include __DIR__.'/vistas/login.php';
                     die;
                 }else{
                     include_once(__DIR__.'/vistas/header.sencillo.php');
