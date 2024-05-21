@@ -36,6 +36,8 @@
                             <i class="fas fa-times"></i>
                          </span>
                          </a>
+                         <a type="button" href="usuarios.rol.php?action=getAll&id_usuario=<?php echo $dato['id_usuario']; ?>"
+                        class="button is-ghost">Rol</a>
                     </div>
                 </td>
             </tr>

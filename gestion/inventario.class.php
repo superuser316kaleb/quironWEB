@@ -4,7 +4,7 @@ class Inventario extends Sistema
 {
     function getAll($id_producto){
         $this->connect();
-        $stmt = $this->conn->prepare("SELECT p.nombre as nombre, i.existencia,fecha_actualizacion,i.id_producto,i.id_inventario from inventario i
+        $stmt = $this->conn->prepare("SELECT p.nombre as nombre, i.existencia,fecha_actualizacion,i.id_producto, i.id_inventario from inventario i
         join productos p on p.id_producto=i.id_producto
         Where i.id_producto=:id_producto;");
         $stmt->bindParam(':id_producto', $id_producto, PDO::PARAM_INT);
@@ -15,10 +15,10 @@ class Inventario extends Sistema
         return $datos;
     }
 
-    function getOne($id_inventario){
+    function getOne($id_usuario){
     $this->connect();
-    $stmt = $this->conn->prepare("SELECT id_producto,id_inventario, existencia, fecha_actualizacion FROM inventario WHERE id_inventario=:id_inventario;");
-    $stmt->bindParam(':id_inventario', $id_inventario, PDO::PARAM_INT);
+    $stmt = $this->conn->prepare("SELECT id_producto,id_usuario, existencia, fecha_actualizacion FROM inventario WHERE id_usuario=:id_usuario;");
+    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $datos = $stmt->fetchAll();
@@ -39,22 +39,22 @@ class Inventario extends Sistema
     return $stmt->rowCount();
 }
 
-function Delete($id_inventario){    
+function Delete($id_usuario){    
     $this->connect();
-    $stmt = $this->conn->prepare("DELETE FROM inventario WHERE id_inventario=:id_inventario;");
-    $stmt->bindParam(':id_inventario', $id_inventario, PDO::PARAM_INT);
+    $stmt = $this->conn->prepare("DELETE FROM inventario WHERE id_usuario=:id_usuario;");
+    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->rowCount();
 }
 
-function Update($id_inventario, $datos){
+function Update($id_usuario, $datos){
     $this->connect(); 
     $stmt=$this->conn->prepare("UPDATE inventario SET existencia=:existencia, fecha_actualizacion=:fecha_actualizacion 
-    WHERE id_inventario=:id_inventario;");
+    WHERE id_usuario=:id_usuario;");
     $fecha_actualizacion = date('Y-m-d H:i:s');
     $stmt->bindParam(':existencia', $datos['existencia'], PDO::PARAM_INT); // Considerando que existencia es un entero
     $stmt->bindParam(':fecha_actualizacion', $fecha_actualizacion, PDO::PARAM_STR); // Cambio a PARAM_INT
-    $stmt->bindParam(':id_inventario', $id_inventario, PDO::PARAM_INT);
+    $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->rowCount();
 }

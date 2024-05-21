@@ -8,7 +8,7 @@ $datos=array();
 $alerta=array();
 switch ($action){
     case 'delete':
-        $fila=$app->Delete($id_inventario);
+        //$fila=$app->Delete($id_inventario);
         if($fila){
             $alerta['tipo']="success";
             $alerta['mensaje']="Inventario eliminado correctamente";
@@ -22,6 +22,7 @@ switch ($action){
         break;
     case 'create':
         include (__DIR__.'/vistas/inventarios/form.php');
+        print_r($datos);
         break;
      case 'save':
          $datos=$_POST;
