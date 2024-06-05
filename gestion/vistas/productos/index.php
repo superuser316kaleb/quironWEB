@@ -1,7 +1,8 @@
 <h1 class="title">Productos</h1>
 <div class="btn-group">
-    <a type="button" class="button is-danger is-light">Regresar</a>
+    <a onclick="goBack()" type="button" class="button is-danger is-light">Regresar</a>
     <a type="button" href="productos.php?action=create" class="button is-primary">Nuevo</a>
+    <a type="button" href="reportes.php?action=productos" class="button is-warning">Reporte</a>
 </div>
 <table class="table">
     <thead>

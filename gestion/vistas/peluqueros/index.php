@@ -1,6 +1,6 @@
 <h1 class="title">Peluqueros</h1>
 <div class="btn-group">
-    <a type="button" class="button is-danger is-light">Regresar</a>
+    <a onclick="goBack()" type="button" class="button is-danger is-light">Regresar</a>
     <a type="button" href="peluqueros.php?action=create" class="button is-primary">Nuevo</a>
 </div>
 <table class="table">
@@ -32,6 +32,8 @@
                             <i class="fas fa-times"></i>
                          </span>
                          </a>
+                         <a type="button" href="fechas.peluquero.php?action=getAll&id_peluquero=<?php echo $dato['id_peluquero']; ?>"
+                        class="button is-info is-inverted">Fechas</a>
                     </div>
                 </td>
             </tr>

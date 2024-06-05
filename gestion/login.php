@@ -14,8 +14,7 @@ switch ($action){
     case 'login':
     $correo=$_POST['correo'];
     $contrasena=$_POST['contrasena'];
-    $login = $app->login($correo,$contrasena);
-    if($login){
+    if($app->login($correo,$contrasena)){
         header('Location: inicio.php');
     }else{
         $tipo='danger';

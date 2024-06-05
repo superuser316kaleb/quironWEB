@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us">
-
 <head>
    <meta charset="utf-8">
    <title>Quirón Veterinaria</title>
-
+<?php 
+include __DIR__."/gestion/sistema.clase.php";
+?>
    <!-- mobile responsive meta -->
    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
    <meta name="description" content="This is meta description">
@@ -53,20 +54,23 @@
             <li class="navbar-item">
                <a class="navbar-link is-arrowless" href="about.php">Nosotros</a>
             </li>
+            <li class="navbar-item">
+               <a class="navbar-link is-arrowless" href="cart.php">Carrito</a>
+            </li>
                 
-        
-            
             <li class="navbar-item has-dropdown is-hoverable has-active">
                <a class="navbar-link">Perfil <small class="ti-angle-down ml-1"></small></a>
                <div class="navbar-dropdown">
+                  <?php if (isset($_SESSION['validado'])): ?>
                   <a class="navbar-item" href="perfil.php">Perfil</a>
-                  <a class="navbar-item" href="login.php">Iniciar Sesión</a>
-                  <a class="navbar-item" href="signup.php">Registrate</a>
+                      <a class="navbar-item" href="login.php?action=logout">Cerrar Sesión</a>
+                  <?php else: ?>
+                      <a class="navbar-item" href="login.php">Iniciar Sesión</a>
+                      <a class="navbar-item" href="login.php?action=register">Registrate</a>
+                  <?php endif; ?>
                   <a class="navbar-item" href="citas.php">Agendar una cita</a>
                </div>
             </li>
-
-            
 
             <li class="navbar-item">
                <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
@@ -85,3 +89,4 @@
       </nav>
    </div>
 </header>
+

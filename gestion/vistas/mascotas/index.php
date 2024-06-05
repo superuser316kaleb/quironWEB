@@ -1,6 +1,6 @@
 <h1 class="title">Mascotas</h1>
 <div class="btn-group">
-    <a type="button" class="button is-danger is-light">Regresar</a>
+    <a onclick="goBack()" type="button" class="button is-danger is-light">Regresar</a>
     <a type="button" href="mascotas.php?action=create" class="button is-primary">Nuevo</a>
 </div>
 <table class="table">
@@ -43,6 +43,8 @@
                             <i class="fas fa-times"></i>
                          </span>
                          </a>
+                         <a type="button" href="historiales.php?action=getAll&id_mascota=<?php echo $dato['id_mascota']; ?>"
+                        class="button is-ghost">Historial</a>
                     </div>
                 </td>
             </tr>

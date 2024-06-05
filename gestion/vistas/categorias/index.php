@@ -1,6 +1,6 @@
 <h1 class="title">Categorías</h1>
 <div class="btn-group">
-    <a type="button" class="button is-danger is-light">Regresar</a>
+    <a onclick="goBack()" type="button" class="button is-danger is-light">Regresar</a>
     <a type="button" href="categorias.php?action=create" class="button is-primary">Nuevo</a>
 </div>
 <table class="table">

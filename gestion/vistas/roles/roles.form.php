@@ -1,4 +1,4 @@
-<form action="usuarios.rol.php?action=<?php echo ($action=='update')?'change&id_usuario='.$datos['id_usuario']:'save'; ?>"
+<form action="usuarios.rol.php?action=<?php echo ($action=='update')?'change&id_rol='.$id_rol.'&id_usuario='.$id_usuario:'save'; ?>"
      method="post" enctype="multipart/form-data">
 <h2 class="title" ><?php echo ($action=='update')?  'Editar': 'Nuevo' ?> Rol de usuario</h2>     
     <div class="field">

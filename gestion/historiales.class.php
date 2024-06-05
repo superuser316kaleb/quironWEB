@@ -1,13 +1,14 @@
 <?php
 require_once(__DIR__."/sistema.clase.php");
-class Inventario extends Sistema
+class Historial extends Sistema
 {
-    function getAll($id_producto){
+    function getAll($id_mascota){
         $this->connect();
-        $stmt = $this->conn->prepare("SELECT p.nombre as nombre, i.existencia,fecha_actualizacion,i.id_producto, i.id_inventario from inventario i
-        join productos p on p.id_producto=i.id_producto
-        Where i.id_producto=:id_producto;");
-        $stmt->bindParam(':id_producto', $id_producto, PDO::PARAM_INT);
+        $stmt = $this->conn->prepare("SELECT m.nombre as nombre, tratamiento,id_historial, m.id_mascota as id_mascota 
+        from historial_mascota h
+        join mascotas m on h.id_mascota=m.id_mascota
+        Where h.id_mascota=:id_mascota;");
+        $stmt->bindParam(':id_mascota', $id_mascota, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $datos = $stmt->fetchAll();
@@ -15,10 +16,10 @@ class Inventario extends Sistema
         return $datos;
     }
 
-    function getOne($id_inventario){
+    function getOne($id_historial){
     $this->connect();
-    $stmt = $this->conn->prepare("SELECT id_producto,id_inventario, existencia, fecha_actualizacion FROM inventario WHERE id_inventario=:id_inventario;");
-    $stmt->bindParam(':id_inventario', $id_inventario, PDO::PARAM_INT);
+    $stmt = $this->conn->prepare("SELECT id_mascota,id_historial, existencia, fecha_actualizacion FROM inventario WHERE id_historial=:id_historial;");
+    $stmt->bindParam(':id_historial', $id_historial, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $datos = $stmt->fetchAll();
@@ -31,30 +32,30 @@ class Inventario extends Sistema
 
     function Insert($datos){
     $this->connect();
-    $stmt=$this->conn->prepare("INSERT INTO inventario (existencia,id_producto) 
-    VALUES (:existencia,:id_producto);");
-    $stmt->bindParam(':existencia', $datos['existencia'], PDO::PARAM_STR);
-    $stmt->bindParam(':id_producto', $datos['id_producto'], PDO::PARAM_STR);
+    $stmt=$this->conn->prepare("INSERT INTO historial_mascota (id_mascota, tratamiento) 
+    VALUES (:id_mascota,:tratamiento);");
+    $stmt->bindParam(':id_mascota', $datos['id_mascota'], PDO::PARAM_INT);
+    $stmt->bindParam(':tratamiento', $datos['tratamiento'], PDO::PARAM_STR);
     $stmt->execute();
     return $stmt->rowCount();
 }
 
-function Delete($id_inventario){    
+function Delete($id_historial){    
     $this->connect();
-    $stmt = $this->conn->prepare("DELETE FROM inventario WHERE id_inventario=:id_inventario;");
-    $stmt->bindParam(':id_inventario', $id_inventario, PDO::PARAM_INT);
+    $stmt = $this->conn->prepare("DELETE FROM inventario WHERE id_historial=:id_historial;");
+    $stmt->bindParam(':id_historial', $id_historial, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->rowCount();
 }
 
-function Update($id_inventario, $datos){
+function Update($id_historial, $datos){
     $this->connect(); 
     $stmt=$this->conn->prepare("UPDATE inventario SET existencia=:existencia, fecha_actualizacion=:fecha_actualizacion 
-    WHERE id_inventario=:id_inventario;");
+    WHERE id_historial=:id_historial;");
     $fecha_actualizacion = date('Y-m-d H:i:s');
     $stmt->bindParam(':existencia', $datos['existencia'], PDO::PARAM_INT); // Considerando que existencia es un entero
     $stmt->bindParam(':fecha_actualizacion', $fecha_actualizacion, PDO::PARAM_STR); // Cambio a PARAM_INT
-    $stmt->bindParam(':id_inventario', $id_inventario, PDO::PARAM_INT);
+    $stmt->bindParam(':id_historial', $id_historial, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->rowCount();
 }

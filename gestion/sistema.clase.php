@@ -21,7 +21,7 @@ var $count=0;
         $stmt=$this->conn->prepare($sql);
         $stmt->execute();
         $datos= array();
-        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $datos = $stmt->fetchAll();
         return $datos;
     }
@@ -109,7 +109,7 @@ var $count=0;
             $_SESSION['id_usuario']=$datos[0]['id_usuario'];
             return $datos[0];
         }else{
-            $this->logout();
+           $this->logout();
         }
         return false;    
     }
@@ -149,7 +149,7 @@ var $count=0;
                 $stmt->bindParam(':correo', $correo,PDO::PARAM_STR);
                 $stmt->execute();
                 $datos=array();
-                $result=$stmt->setFetchMode(PDO::FETCH_ASSOC);
+                $stmt->setFetchMode(PDO::FETCH_ASSOC);
                 $datos = $stmt->fetchAll();
                 if(isset($datos[0])){
                     $token1 = md5($correo.'Al34t0ry');
@@ -233,6 +233,7 @@ var $count=0;
                 }
             }
         }
+        
    function register($datos){
     if (!filter_var($datos['correo'], FILTER_VALIDATE_EMAIL)) {
         return false;

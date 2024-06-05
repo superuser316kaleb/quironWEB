@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Regístrate</title>
-    <script src="/../quiron/js/main.js"></script>
+    <script src="/quiron/js/main.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
     <link rel="stylesheet" href="/quiron/css/login.css">
-    <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/quiron/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="icon" href="/images/icon.png" type="image/x-icon">
+    <link rel="icon" href="/quiron/images/icon.png" type="image/x-icon">
 </head>
 <body>
     <div class="columns is-vcentered">

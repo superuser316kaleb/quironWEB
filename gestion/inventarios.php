@@ -7,22 +7,8 @@ $id_inventario=(isset($_GET['id_inventario']))?$_GET['id_inventario'] : null;
 $datos=array();
 $alerta=array();
 switch ($action){
-    case 'delete':
-        //$fila=$app->Delete($id_inventario);
-        if($fila){
-            $alerta['tipo']="success";
-            $alerta['mensaje']="Inventario eliminado correctamente";
-            }else{
-            $alerta['tipo']="danger";
-            $alerta['mensaje']="Error al eliminar el inventario";
-            }    
-        $datos=$app->getAll($_GET['id_producto']);
-        include (__DIR__.'/vistas/alerta.php');
-        include (__DIR__.'/vistas/inventarios/index.php');
-        break;
     case 'create':
         include (__DIR__.'/vistas/inventarios/form.php');
-        print_r($datos);
         break;
      case 'save':
          $datos=$_POST;

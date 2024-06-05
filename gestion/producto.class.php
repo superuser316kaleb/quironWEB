@@ -4,8 +4,11 @@ class Producto extends Sistema
 {
     function getAll(){
         $datos=$this->query("SELECT p.id_producto,p.nombre,m.marca as marca ,p.descripcion,p.precio,p.costo,c.categoria as categoria ,p.fotografia
+        , max(i.existencia) as existencias
         FROM productos p left join marcas m on p.id_marca = m.id_marca
         left join categorias c on p.id_categoria=c.id_categoria
+        left join inventario i on p.id_producto=i.id_producto
+        group by 1,2,3,4,5,6,7,8
         order by 1;");
         return $datos;
     }

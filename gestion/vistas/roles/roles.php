@@ -1,6 +1,6 @@
-<h1 class="title">Role(s) <?php echo $datos[0]['nombre']; ?> </h1>
+<h1 class="title">Rol(es) <?php echo $datos[0]['nombre']; ?> </h1>
 <div class="btn-group">
-    <a type="button" class="button is-danger is-light">Regresar</a>
+    <a onclick="goBack()" type="button" class="button is-danger is-light">Regresar</a>
     <a type="button" href="usuarios.rol.php?action=create&id_usuario=<?php echo $datos[0]['id_usuario']; ?>" class="button is-primary">Nuevo</a>
 </div>
 <table class="table">
@@ -21,9 +21,8 @@
                 <td><?php echo $dato['correo']; ?></td>
                 <td>
                     <div class="btn-group">
-                        <a type="button" href="usuarios.rol.php?action=update&id_rol=<?php echo $dato['id_rol']; ?>"
-                        class="button is-primary is-inverted">Editar</a>
-                        <a type="button" href="usuarios.rol.php?action=delete&id_rol=<?php echo $dato['id_rol']; ?>"
+                        <a type="button" href="usuarios.rol.php?action=delete&id_rol=<?php echo $dato['id_rol'] 
+                        .'&id_usuario='.$dato['id_usuario']; ?>"
                          class="button is-danger is-inverted">
                          <span>Eliminar</span>
                          <span class="icon is-small">

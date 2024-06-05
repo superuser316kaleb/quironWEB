@@ -1,4 +1,5 @@
-<?php include __DIR__."/header.php"; ?>
+<?php include __DIR__."/header.php";
+ ?>
 <section class="section">
 	<div class="container">
 		<div class="columns is-multiline">
