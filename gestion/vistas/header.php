@@ -33,7 +33,7 @@
         <a class="navbar-item" href="inicio.php">Inicio</a>
         <a class="navbar-item" href="citas.php">Citas</a>
         <a class="navbar-item" href="mascotas.php" >Mascotas</a>
-        <a class="navbar-item">Historiales</a>
+        
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">Más</a>
           <div class="navbar-dropdown">
@@ -50,9 +50,7 @@
               Categorías
             </a>
             <hr class="navbar-divider">
-            <a class="navbar-item">
-              Buscar mascota
-            </a>
+            
           </div>
         </div>
         

@@ -45,7 +45,7 @@
     <div class="field">
         <label class="label">Número Telefónico</label>
         <div class="control">
-            <input class="input" type="text" name="numero_telefonico"  required="required" 
+            <input class="input" type="text" name="numero_telefonico"  required="required" minlength="10" maxlength="10"
             value="<?php echo (isset($datos['numero_telefonico']))? $datos['numero_telefonico']:''; ?>">
         </div>
     </div>

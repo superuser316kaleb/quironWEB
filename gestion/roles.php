@@ -6,6 +6,7 @@ $action=(isset($_GET['action']))?$_GET['action'] : null;
 $id_rol=(isset($_GET['id_rol']))?$_GET['id_rol'] : null;
 $datos=array();
 $alerta=array();
+$app->checkPrivilegio('RyP',true);
 
 switch ($action){
     case 'delete':

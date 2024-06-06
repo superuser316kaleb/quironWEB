@@ -6,6 +6,7 @@ $action=(isset($_GET['action']))?$_GET['action'] : null;
 $id_historial=(isset($_GET['id_historial']))?$_GET['id_historial'] : null;
 $datos=array();
 $alerta=array();
+$app->checkPrivilegio('Historiales',true);
 switch ($action){
     case 'create':
         include (__DIR__.'/vistas/historiales/form.php');

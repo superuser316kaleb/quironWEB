@@ -8,12 +8,20 @@
         </div>
     </div>
     <div class="field">
+        <label class="label">Hora</label>
+        <div class="control">
+            <input class="input" type="time" name="hora" required="required" 
+            value="<?php echo (isset($datos['hora'])) ? $datos['hora'] : ''; ?>">
+        </div>
+    </div>
+    <div class="field">
         <label class="label">Detalle</label>
         <div class="control">
             <input class="input" type="text" name="detalle" required="required" 
             value="<?php echo (isset($datos['detalle'])) ? $datos['detalle'] : ''; ?>">
         </div>
     </div>
+    <?php if ($action == 'update'):?>
     <div class="field">
         <label class="label">Estado</label>
         <div class="control">
@@ -25,13 +33,7 @@
             </div>
         </div>
     </div>
-    <div class="field">
-        <label class="label">ID Mascota</label>
-        <div class="control">
-            <input class="input" type="text" name="id_mascota" required="required" 
-            value="<?php echo (isset($datos['id_mascota'])) ? $datos['id_mascota'] : ''; ?>">
-        </div>
-    </div>
+    <?php endif; ?>
     <div class="field">
         <label class="label">ID Usuario</label>
         <div class="control">

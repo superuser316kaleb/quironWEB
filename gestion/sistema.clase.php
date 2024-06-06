@@ -1,6 +1,10 @@
-<?php 
+<?php
+require __DIR__.'/../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+             
 require (__DIR__.'/config.php');
 class Sistema extends Config{
 var $conn;    
@@ -141,42 +145,61 @@ var $count=0;
         return $info;
     }
     function reset($correo){
-            if(filter_var($correo, FILTER_VALIDATE_EMAIL)){
-                $this->connect();
-                $sql="SELECT correo, contrasena,token, nombre from usuarios
-                where correo = :correo";
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bindParam(':correo', $correo,PDO::PARAM_STR);
-                $stmt->execute();
-                $datos=array();
-                $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                $datos = $stmt->fetchAll();
-                if(isset($datos[0])){
-                    $token1 = md5($correo.'Al34t0ry');
-                    $token2 = md5($correo.date('Y-m-d H-i-s').rand(1,100000));
-                    $token = $token1 . $token2;
-                    $sql = "UPDATE usuarios SET token=:token where correo=:correo";
-                    $stmt = $this->conn->prepare($sql);
-                    $stmt->bindParam(':token', $token,PDO::PARAM_STR);
-                    $stmt->bindParam(':correo', $correo,PDO::PARAM_STR);
-                    $stmt->execute();
-                    $destinatario=$correo;
-                    $nombre_persona=$datos[0]['nombre'];
-                    $asunto='Recuperacion de contraseña';
-                    $mensaje='Hola '.$nombre_persona.'<br>
-                    Se te ha enviado un correo para recuperar tu contraseña. <br>
-                    Si no ha recibido este correo por favor ignora este mensaje.<br>
-                    <a href="http://localhost/quiron/gestion/login.php?action=recovery&token='.$token.'">Recuperar contraseña</a><br>
-                    Muchas gracias <br>
-                    Atentamente: La Ferreteria';
-                    if($this->sendMail($destinatario,$nombre_persona,$asunto,$mensaje)){
-                        return true;
-                    }else{ 
-                        return false;
-                    }
-                }
+    if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        $this->connect();
+        $sql = "SELECT correo, contrasena, token, nombre FROM usuarios WHERE correo = :correo";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
+        $stmt->execute();
+        $datos = array();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $datos = $stmt->fetchAll();
+        if (isset($datos[0])) {
+            $token1 = md5($correo.'Al34t0ry');
+            $token2 = md5($correo.date('Y-m-d H-i-s').rand(1, 100000));
+            $token = $token1 . $token2;
+            $sql = "UPDATE usuarios SET token = :token WHERE correo = :correo";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':token', $token, PDO::PARAM_STR);
+            $stmt->bindParam(':correo', $correo, PDO::PARAM_STR);
+            $stmt->execute();
+            $destinatario = $correo;
+            $nombre_persona = $datos[0]['nombre'];
+            $asunto = 'Recuperación de contraseña';
+
+            // Generar el enlace de recuperación
+            $url = 'http://localhost/quiron/gestion/login.php?action=recovery&token=' . $token;
+
+            // Generar el código QR
+            
+
+            $qrCode = QrCode::create($url)
+                ->setSize(300)
+                ->setMargin(10)
+                ->setEncoding(new \Endroid\QrCode\Encoding\Encoding('UTF-8'));
+            $writer = new PngWriter();
+            $result = $writer->write($qrCode);
+            $qrCodeDataUri = $result->getDataUri();
+
+            // Crear el mensaje con el QR code
+            $mensaje = 'Hola ' . $nombre_persona . '<br>
+                        Se te ha enviado un correo para recuperar tu contraseña. <br>
+                        Si no ha recibido este correo por favor ignora este mensaje.<br>
+                        <a href="' . $url . '">Recuperar contraseña</a><br>
+                        O escanea el siguiente código QR:<br>
+                        <img src="' . $qrCodeDataUri . '" alt="QR Code"><br>
+                        Muchas gracias <br>
+                        Atentamente: La Ferretería';
+
+            if ($this->sendMail($destinatario, $nombre_persona, $asunto, $mensaje)) {
+                return true;
+            } else {
+                return false;
             }
         }
+    }
+}
+
     function sendMail($destinatario,$nombre_persona,$asunto,$mensaje){
         require __DIR__.'/../vendor/autoload.php'; 
         $mail = new PHPMailer();

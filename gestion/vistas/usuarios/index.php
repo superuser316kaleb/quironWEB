@@ -29,13 +29,7 @@
                     <div class="btn-group">
                         <a type="button" href="usuarios.php?action=update&id_usuario=<?php echo $dato['id_usuario']; ?>"
                         class="button is-primary is-inverted">Editar</a>
-                        <a type="button" href="usuarios.php?action=delete&id_usuario=<?php echo $dato['id_usuario']; ?>"
-                         class="button is-danger is-inverted">
-                         <span>Eliminar</span>
-                         <span class="icon is-small">
-                            <i class="fas fa-times"></i>
-                         </span>
-                         </a>
+                        
                          <a type="button" href="usuarios.rol.php?action=getAll&id_usuario=<?php echo $dato['id_usuario']; ?>"
                         class="button is-ghost">Rol</a>
                     </div>

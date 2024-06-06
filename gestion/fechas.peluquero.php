@@ -6,6 +6,7 @@ $action=(isset($_GET['action']))?$_GET['action'] : null;
 $id_fecha=(isset($_GET['id_fecha']))?$_GET['id_fecha'] : null;
 $datos=array();
 $alerta=array();
+$app->checkPrivilegio('Citas',true);
 switch ($action){
      case 'delete':
         $fila=$app->Delete($id_fecha);

@@ -6,6 +6,7 @@ $action=(isset($_GET['action']))?$_GET['action'] : null;
 $id_inventario=(isset($_GET['id_inventario']))?$_GET['id_inventario'] : null;
 $datos=array();
 $alerta=array();
+$app->checkPrivilegio('Productos',true);
 switch ($action){
     case 'create':
         include (__DIR__.'/vistas/inventarios/form.php');

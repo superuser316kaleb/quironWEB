@@ -5,8 +5,7 @@
                <a class="mb-5 is-block" href="inicio.php">
                   <img class="" height="100px" width="100px" src="images/lowgo.png">
                </a>
-               <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-            </div>
+                </div>
 
             <div class="column is-2-widescreen is-3-desktop is-6">
                <h6 class="mb-4">Enlaces Rápido</h6>

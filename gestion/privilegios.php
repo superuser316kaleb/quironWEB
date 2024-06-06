@@ -2,13 +2,11 @@
 include (__DIR__.'/vistas/header.php');
 include (__DIR__.'/privilegios.class.php');
 $app=new Privilegio();
-//$app->checkRole('Administrador',true);
-//$app->checkPrivilegio('privilegios',true);
 $action=(isset($_GET['action']))?$_GET['action'] : null;
 $id_privilegio=(isset($_GET['id_privilegio']))?$_GET['id_privilegio'] : null;
 $datos=array();
 $alerta=array();
-
+$app->checkPrivilegio('RyP',true);
 switch ($action){
     case 'delete':
         $fila=$app->Delete($id_privilegio);

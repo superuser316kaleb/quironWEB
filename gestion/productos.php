@@ -12,6 +12,7 @@ $action=(isset($_GET['action']))?$_GET['action'] : null;
 $id_producto=(isset($_GET['id_producto']))?$_GET['id_producto'] : null;
 $datos=array();
 $alerta=array();
+$app->checkPrivilegio('Productos',true);
 
 switch ($action){
     case 'delete':

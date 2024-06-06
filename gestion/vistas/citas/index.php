@@ -10,7 +10,6 @@
             <th>Fecha</th>
             <th>Detalle</th>
             <th>Estado</th>
-            <th>Id Mascota</th>
             <th>Id Usuario</th>
             <th>Opciones</th>
         </tr>
@@ -22,7 +21,6 @@
                 <td><?php echo $dato['fecha']; ?></td>
                 <td><?php echo $dato['detalle']; ?></td>
                 <td><?php echo $dato['estado']; ?></td>
-                <td><?php echo $dato['id_mascota']; ?></td>
                 <td><?php echo $dato['id_usuario']; ?></td>
                 <td>
                     <div class="btn-group">

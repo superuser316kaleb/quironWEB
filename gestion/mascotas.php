@@ -6,7 +6,7 @@ $action=(isset($_GET['action']))?$_GET['action'] : null;
 $id_mascota=(isset($_GET['id_mascota']))?$_GET['id_mascota'] : null;
 $datos=array();
 $alerta=array();
-
+$app->checkPrivilegio('Mascotas',true);
 switch ($action){
     case 'delete':
         $fila=$app->Delete($id_mascota);

@@ -6,7 +6,7 @@ $action=(isset($_GET['action']))?$_GET['action'] : null;
 $id_peluquero=(isset($_GET['id_peluquero']))?$_GET['id_peluquero'] : null;
 $datos=array();
 $alerta=array();
-
+$app->checkPrivilegio('Personal',true);
 switch ($action){
     case 'delete':
         $fila=$app->Delete($id_peluquero);

@@ -6,6 +6,7 @@ $action=(isset($_GET['action']))?$_GET['action'] : null;
 $id_cita=(isset($_GET['id_cita']))?$_GET['id_cita'] : null;
 $datos=array();
 $alerta=array();
+$app->checkPrivilegio('Citas',true);
 
 switch ($action){
     case 'delete':

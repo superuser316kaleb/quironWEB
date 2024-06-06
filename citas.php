@@ -6,6 +6,11 @@ $sistema2 = new Fechasp();
 $veterinarios = $sistema->getAllFront();
 $peluqueros = $sistema2->getAllFront();
 ?>
+<script>
+  function mostrarMensaje() {
+    alert("Por favor, inicie sesión primero.");
+  }
+</script>
 <div class="column is-12">
 	<div class="title-bordered mb-5 is-flex is-align-items-center">
 		<h1 class="h4">Bienvenido a la agenda de citas</h1>
@@ -25,7 +30,11 @@ $peluqueros = $sistema2->getAllFront();
 			<td><?php echo $veterinario['fecha'] ?></td>
 			<td><?php echo $veterinario['hora'] ?></td>
 			<td><?php echo $veterinario['nombre'] ?></td>	
-			<td><a href="citas.php?action=create" class="button is-info">Agendar</a></td>
+			<td><?php if(isset($_SESSION['id_usuario'])): ?>
+              <a href="citas.form.php?fecha=<?php echo $veterinario['fecha'],'&hora='.$veterinario['hora']; ?>" class="button is-info">Agendar</a>
+            <?php else: ?>
+              <button class="button is-warning" onclick="mostrarMensaje()">Agendar</button>
+            <?php endif; ?></td>
 			<?php endforeach; ?>
 		</tbody>
 	</table>	
@@ -44,7 +53,11 @@ $peluqueros = $sistema2->getAllFront();
 			<td><?php echo $peluquero['fecha']; ?></td>
 			<td><?php echo $peluquero['hora']; ?></td>
 			<td><?php echo $peluquero['nombre']; ?></td>
-			<td><a href="citas.php?action=create" class="button is-info">Agendar</a></td>
+			<td><?php if(isset($_SESSION['id_usuario'])): ?>
+              <a href="citas.form.php?fecha=<?php echo $peluquero['fecha'],'&hora='.$peluquero['hora']; ?>" class="button is-info">Agendar</a>
+            <?php else: ?>
+              <button class="button is-warning" onclick="mostrarMensaje()">Agendar</button>
+            <?php endif; ?></td>
 			<?php endforeach; ?>
 		</tbody>
 	</table>	

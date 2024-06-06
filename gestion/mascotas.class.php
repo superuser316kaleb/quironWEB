@@ -19,7 +19,7 @@ function getOne($id_mascota){
     FROM mascotas WHERE id_mascota=:id_mascota;");
     $stmt->bindParam(':id_mascota', $id_mascota, PDO::PARAM_INT);
     $stmt->execute();
-    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $datos = $stmt->fetchAll();
     if(isset($datos[0])) {
         $this->setCount(count($datos));

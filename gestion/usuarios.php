@@ -6,8 +6,9 @@ $action=(isset($_GET['action']))?$_GET['action'] : null;
 $id_usuario=(isset($_GET['id_usuario']))?$_GET['id_usuario'] : null;
 $datos=array();
 $alerta=array();
+$app->checkPrivilegio('Usuarios',true);
 switch ($action){
-    case 'delete':
+    /*case 'delete':
         $fila=$app->Delete($id_usuario);
         if($fila){
             $alerta['tipo']="success";
@@ -19,7 +20,7 @@ switch ($action){
         $datos=$app->getAll();
         include (__DIR__.'/vistas/alerta.php');
         include (__DIR__.'/vistas/usuarios/index.php');
-        break;
+        break;*/
     case 'create':
         include (__DIR__.'/vistas/usuarios/form.php');
         break;

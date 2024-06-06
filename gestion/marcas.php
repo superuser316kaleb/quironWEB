@@ -6,7 +6,7 @@ $action=(isset($_GET['action']))?$_GET['action'] : null;
 $id_marca=(isset($_GET['id_marca']))?$_GET['id_marca'] : null;
 $datos=array();
 $alerta=array();
-
+$app->checkPrivilegio('Productos',true);
 switch ($action){
     case 'delete':
         $fila=$app->Delete($id_marca);

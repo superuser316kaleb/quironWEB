@@ -30,7 +30,7 @@ class Marca extends Sistema
     $nombre_archivo=$this-> upload("marcas");
     if($nombre_archivo){
         if($this->validateProducto($datos)){
-            $stmt=$this->conn->prepare("INSERT INTO marcas(marca,fotografia))    
+            $stmt=$this->conn->prepare("INSERT INTO marcas(marca,fotografia)    
             VALUES (:marca, :fotografia);");
             $stmt->bindParam(':marca', $datos['marca'], PDO::PARAM_STR);
             $stmt->bindParam(':fotografia', $nombre_archivo, PDO::PARAM_STR);
